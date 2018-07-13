@@ -1,3 +1,56 @@
-/*
- * Estilos de tu proyecto
- */
+@import url('https://fonts.googleapis.com/css?family=Bitter|Open+Sans:400,600,700');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.openSans{
+  font-family: 'Open Sans', sans-serif;
+}
+.bitter{
+  font-family: 'Bitter', serif;
+}
+.login{
+  display: flex;
+  justify-content: center;
+}
+.loginContent{
+  margin: 160px 0;
+  padding: 30px 50px;
+  background-color: #f7f7f7;
+  box-shadow: 3px 5px 10px #d5d5d5;
+}
+.login p{
+  font-size: 18px;
+  margin: 3px 0;
+  text-align: center;
+}
+.username, .password{
+  margin-bottom: 15px;
+  padding: 3px;
+  border: 0;
+  outline: 0;
+}
+.btn-login{
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #ffe521;
+  border: 0;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 700;
+  /* border-radius: 20px; */
+}
+.btn-login:hover{
+  background-color:  rgba(255, 229, 33, 0.7);
+}
+.intro{
+  height: 700px;
+  background-color: #f2f2f2;
+}
+.none{
+  display: none;
+}
+.block{
+  display: block;
+}
