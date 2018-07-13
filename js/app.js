@@ -1,11 +1,10 @@
 // VARIÁVEIS GLOBAIS
 let btnLogin = document.querySelector(".btn-login");
-let intro = document.querySelector(".intro");
+let dashboard = document.querySelector(".dashboard");
 let login = document.querySelector(".login");
 
 function logIn(event) {
   event.preventDefault();
-  let log = 0;
   let username = document.querySelector(".username").value;
   let password = document.querySelector(".password").value;
 
@@ -15,7 +14,7 @@ function logIn(event) {
   else { alert("Senha ou Usuário inválido."); }
 }
 function loginAux(){
-  intro.classList.remove("none"); 
+  dashboard.classList.remove("none"); 
   login.classList.add("none");
 }
 
