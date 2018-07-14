@@ -4,6 +4,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
+  text-decoration: none;
 }
 /* .bitter{
   font-family: 'Bitter', serif;
@@ -51,23 +52,46 @@
 .block{
   display: block;
 }
+.sedes-selection{
+  padding: 40px 0;
+  text-align: center;
+}
+.sedes-list{
+  padding: 80px 0;
+  display: flex;
+  justify-content: space-around;
+}
+.sedes-list img{
+  margin: 20px 0;
+}
+.sedes-list button{
+  margin: 10px 0;
+}
+.peru, .mexico, .chile, .brasil{
+  display: flex;
+  flex-direction: column;
+}
 header{
   background-color: #f2f2f2;
   padding: 10px 20px;
   position: fixed;
   top: 0;
+  z-index: 1;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
-header img{
+header .logo{
   width: 200px;
   height: 25px;
 }
 #menu{
   width: 20%;
   position: fixed;
-  top: 49px;
+  top: 45px;
   height: 100%;
   float: left;
+  font-weight: 700;
   /* background-color: #f2f2f2; */
   background-color: #1d1f29;
 }
@@ -83,7 +107,6 @@ header img{
 }
 #menu #dash{
   background-color: #ffc107;
-  font-weight: 700;
   color: #000;
 }
 #menu a:hover{
@@ -91,6 +114,16 @@ header img{
   color: #000;
 }
 #content{
+  margin-top: 50px;
   width: 80%;
   float: right;
 }
+.sedesBtn{
+  padding: 30px;
+  margin: 30px;
+}
+
+/* google translate */
+#goog-gt-tt {display:none !important;}
+.goog-te-banner-frame {display:none !important;}
+#google_translate_element2 {display:none!important;}

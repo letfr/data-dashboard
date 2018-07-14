@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Data Dashboard</title>
@@ -20,25 +21,74 @@
   </form>
   </section>
 
+  <section class="sedes-selection none">
+    <img src="assets/images/logo.png" alt="logotype" class="logo">
+    <div class="sedes-list">
+      <div class="brasil"><img src="assets/images/brasil.png" alt="" width="250" height="167">
+      <button class="sp-select">São Paulo</button>
+      </div>
+      <div class="chile">
+        <img src="assets/images/chile.png" alt="" width="250" height="167">
+        <button class="santiago-select">Santiago</button>
+      </div>
+      <div class="mexico">
+        <img src="assets/images/mexico.png" alt="" width="250" height="167">
+        <button class="cdmx-select">Ciudad de México</button>
+      </div>
+      <div class="peru">
+        <img src="assets/images/peru.png" alt="" width="250" height="167">
+        <button class="arq-select">Arequipa</button>
+        <button class="lima-select">Lima</button>
+      </div>
+    </div>
+  </section>
+
   <section class="dashboard none">
     <header>
       <img src="assets/images/logo.png" alt="logotype" class="logo">
+      <!-- GTranslate: https://gtranslate.io/ -->
+      <div class="translate">
+        <a href="#" onclick="doGTranslate('pt|en');return false;" title="English" class="gflag nturl">
+          <img src="assets/images/002-united-states.png" height="24" width="24" />
+        </a>
+        <a href="#" onclick="doGTranslate('pt|pt');return false;" title="Portuguese" class="gflag nturl" style="background-position:-300px -200px;">
+          <img src="assets/images/003-brazil.png" height="24" width="24" />
+        </a>
+        <a href="#" onclick="doGTranslate('pt|es');return false;" title="Spanish" class="gflag nturl" style="background-position:-600px -200px;">
+          <img src="assets/images/001-mexico.png" height="24" width="24" />
+        </a>
+      </div>
+      <div id="google_translate_element2"></div>
     </header>
     <div id="menu">
-        <ul>
-        <li><a href="#" id="dash">DASHBOARD</a></li>
-        <li><a href="#">link2</a></li>
-        <li><a href="#">link3</a></li>
-        <li><a href="#">link4</a></li>
-        <li><a href="#">link5</a></li>
-        </ul>
-      </div>
-      <div id="content">
-        
-      </div>
+      <ul>
+        <li>
+          <a href="#" id="dash">DASHBOARD</a>
+        </li>
+        <li>
+          <a href="#">link2</a>
+        </li>
+        <li>
+          <a href="#">link3</a>
+        </li>
+        <li>
+          <a href="#">link4</a>
+        </li>
+        <li>
+          <a href="#">link5</a>
+        </li>
+      </ul>
+    </div>
+    <div id="content">
+      <!-- <div class="alunas-total">
+        <p>Total de alunas matrículadas</p>
+      </div> -->
+    </div>
   </section>
 
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit2"></script>
 </body>
+
 </html>
