@@ -4,9 +4,10 @@ let dashboard = document.querySelector(".dashboard");
 let sedesSelection = document.querySelector(".sedes-selection");
 let content = document.querySelector("#content");
 let login = document.querySelector(".login");
-let alunasAtivas = 0;
-let alunasDesistentes = 0;
-let alunasMetas = 0;
+let activeStudents = 0;
+let dropoutStudents = 0;
+let targetStudentss = 0;
+let totalNps = 0;
 
 function displayChange(add, remove) {
   add.classList.remove("none");
@@ -32,103 +33,90 @@ for (x in itenList) {
     sedesSelection.classList.add("none");
   };
 }
+
 // SANTIAGO
 let santiago1 = document.querySelector("#santiago1").addEventListener("click", function () {
-  alunasMatriculadasInfo("SCL", itenList[0].textContent);
+  dashboardInfo("SCL", itenList[0].textContent);
 });
 let santiago2 = document.querySelector("#santiago2").addEventListener("click", function () {
-  alunasMatriculadasInfo("SCL", itenList[1].textContent);
+  dashboardInfo("SCL", itenList[1].textContent);
 });
 let santiago3 = document.querySelector("#santiago3").addEventListener("click", function () {
-  alunasMatriculadasInfo("SCL", itenList[2].textContent);
+  dashboardInfo("SCL", itenList[2].textContent);
 });
 // CIDADE DO MEXICO
 let cdmx1 = document.querySelector("#cdmx1").addEventListener("click", function () {
-  alunasMatriculadasInfo("CDMX", itenList[3].textContent);
+  dashboardInfo("CDMX", itenList[3].textContent);
 });
 let cdmx2 = document.querySelector("#cdmx2").addEventListener("click", function () {
-  alunasMatriculadasInfo("CDMX", itenList[4].textContent);
+  dashboardInfo("CDMX", itenList[4].textContent);
 });
 // AREQUIPA
 let aqp1 = document.querySelector("#aqp1").addEventListener("click", function () {
-  alunasMatriculadasInfo("AQP", itenList[5].textContent);
+  dashboardInfo("AQP", itenList[5].textContent);
 });
 let aqp2 = document.querySelector("#aqp2").addEventListener("click", function () {
-  alunasMatriculadasInfo("AQP", itenList[6].textContent);
+  dashboardInfo("AQP", itenList[6].textContent);
 });
 // LIMA
 let lima1 = document.querySelector("#lima1").addEventListener("click", function () {
-  alunasMatriculadasInfo("LIM", itenList[7].textContent);
+  dashboardInfo("LIM", itenList[7].textContent);
 });
 let lima2 = document.querySelector("#lima2").addEventListener("click", function () {
-  alunasMatriculadasInfo("LIM", itenList[8].textContent);
+  dashboardInfo("LIM", itenList[8].textContent);
 });
 let lima3 = document.querySelector("#lima3").addEventListener("click", function () {
-  alunasMatriculadasInfo("LIM", itenList[9].textContent);
+  dashboardInfo("LIM", itenList[9].textContent);
 });
 
-// TOTAL ALUNAS MATRICULADAS
+
+// ENVIANDO INFORMAÇÕES PARA DASHBOARD
 let sprints = 0;
-function alunasMatriculadasInfo(sd, trm) {
-  let std = data[sd][trm]["students"]
+function dashboardInfo(sd, trm) {
+  let std = data[sd][trm]["students"];
   for (i in std) {
-    if (std[i]["active"] === true) { alunasAtivas += 1; }
-    else if (std[i]["active"] === false) { alunasDesistentes += 1; }
+    if (std[i]["active"] === true) { activeStudents += 1; }
+    else if (std[i]["active"] === false) { dropoutStudents += 1; }
     for (j in std[i]["sprints"]) {
       if (std[i]["sprints"]) {
         if (std[i]["sprints"][j]["score"]["tech"] > 1260 && std[i]["sprints"][j]["score"]["hse"] > 840) {
-          alunasMetas += 1;
+          targetStudentss += 1;
           sprints = std[i]["sprints"].length;
         }
-      } else if (!std[i]["sprints"] || alunasMetas > 0) {
+      } else if (!std[i]["sprints"] || targetStudentss > 0) {
         sprints = 1;
       }
     }
   }
-  alunasMetas = alunasMetas / sprints;
 
-  let alunasMatriculadas = document.querySelector(".alunas-total");
-  let div = document.createElement("div");
-  div.classList.add("info-box");
-  alunasMatriculadas.appendChild(div);
-  let p = document.createElement("p");
-  div.appendChild(p);
-  p.textContent = alunasAtivas;
-  let small = document.createElement("small");
-  small.textContent = "alunas ativas";
-  div.appendChild(small);
-  // PERCENTUAL DESISTENTES
-  let div1 = document.createElement("div");
-  div1.classList.add("info-box");
-  alunasMatriculadas.appendChild(div1);
-  let p1 = document.createElement("p");
-  div1.appendChild(p1);
-  p1.textContent = (alunasDesistentes / data[sd][trm]["students"].length * 100).toFixed(1) + "%";
-  let small1 = document.createElement("small");
-  small1.textContent = "desistências";
-  div1.appendChild(small1);
-  // ALUNAS QUE EXCEDEM A META DE PONTOS
-  let alunasMeta = document.querySelector(".alunas-meta");
-  let divMeta = document.createElement("div");
-  divMeta.classList.add("info-box");
-  alunasMeta.appendChild(divMeta);
-  let pMeta = document.createElement("p");
-  pMeta.textContent = Math.round(alunasMetas);
-  divMeta.appendChild(pMeta);
-  let smallMeta = document.createElement("small");
-  smallMeta.textContent = "excedem a meta";
-  divMeta.appendChild(smallMeta);
-  // PERCENTUAL EXCEDEM A META
-  let divMeta1 = document.createElement("div");
-  divMeta1.classList.add("info-box");
-  alunasMeta.appendChild(divMeta1);
-  let pMeta1 = document.createElement("p");
-  pMeta1.textContent = (alunasMetas / std.length * 100).toFixed(1) + "%";
-  divMeta1.appendChild(pMeta1);
-  let smallMeta1 = document.createElement("small");
-  smallMeta1.textContent = "% do total";
-  divMeta1.appendChild(smallMeta1);
+  let ratings = data[sd][trm]["ratings"];
+  for (i in ratings) {
+    totalNps = ratings[i]["nps"]["promoters"] - ratings[i]["nps"]["detractors"];
+  }
+  let promoters = ratings[i]["nps"]["promoters"];
+  let passive = ratings[i]["nps"]["passive"];
+  let detractors = ratings[i]["nps"]["detractors"];
+
+  targetStudentss = targetStudentss / sprints;
+
+  createElements(sd, trm, std, ratings, totalNps, promoters, passive, detractors);
 }
+
+function createElements(sd, trm, std, ratings, totalNps, promoters, passive, detractors) {
+  document.getElementsByClassName("info")[0].textContent = activeStudents;
+  // PERCENTUAL DESISTENTES
+  document.getElementsByClassName("info")[1].textContent = (dropoutStudents / data[sd][trm]["students"].length * 100).toFixed(1) + "%";
+  // ALUNAS QUE EXCEDEM A META DE PONTOS
+  document.getElementsByClassName("info")[2].textContent = Math.round(targetStudentss);
+  // PERCENTUAL EXCEDEM A META
+  document.getElementsByClassName("info")[3].textContent = (targetStudentss / std.length * 100).toFixed(1) + "%";
+  // NPS PERCENTUAL
+  document.getElementsByClassName("info")[4].textContent = totalNps + "%";
+  document.getElementsByClassName("info-label")[0].textContent = promoters + "% Promoters";
+  document.getElementsByClassName("info-label")[1].textContent = passive + "% Passive";
+  document.getElementsByClassName("info-label")[2].textContent = detractors + "% Detractors";
+}
+
 console.table(data);
 
 

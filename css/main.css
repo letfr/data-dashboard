@@ -55,7 +55,9 @@ body{
 .block{
   display: block;
 }
-
+.flex{
+  display: flex; 
+}
 .sedes-selection{
   padding: 40px 140px;
   text-align: center;
@@ -152,17 +154,23 @@ header .logo{
   width: 83%;
   float: right;
   display: flex;
+  flex-wrap: wrap;
 }
-.box{
+.box, .box1{
   margin: 10px;
   padding: 20px;
   text-align: center;
   background-color: #f2f2f2;
   box-shadow: 3px 5px 10px #d5d5d5;
   display: inline-block;
-  width: 33%;
 }
-.box h1{
+.box{
+  width: 31%;
+}
+.box1{
+  width: 46%;
+}
+.box h1, .box1 h1{
   text-transform: uppercase;
   font-size: 16px;
   color: #ffc107;
@@ -183,8 +191,15 @@ header .logo{
 .info-box small{
   text-transform: uppercase;
 }
-
+.info-label{
+  display: block;
+}
+select{
+  border: 0;
+  padding: 5px 30px;
+  outline-color: #ffc107;
+}
 /* google translate */
 #goog-gt-tt {display:none !important;}
 .goog-te-banner-frame {display:none !important;}
-#google_translate_element2 {display:none!important;}
+#google_translate_element2 {display:none !important;}
