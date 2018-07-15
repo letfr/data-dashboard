@@ -1,14 +1,16 @@
-@import url('https://fonts.googleapis.com/css?family=Bitter|Open+Sans:400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
   text-decoration: none;
+  list-style: none;
 }
-/* .bitter{
-  font-family: 'Bitter', serif;
-} */
+body{
+  background-image: url("../assets/images/Elegant_Background-15.jpg");
+  background-size: cover;
+}
 .login{
   display: flex;
   justify-content: center;
@@ -18,10 +20,11 @@
   justify-content: center;
 }
 .loginContent{
-  margin: 160px 0;
+  margin: 140px 0;
   padding: 30px 50px;
   box-shadow: 3px 5px 10px #d5d5d5;
   background-color: #f2f2f2;
+  text-align: center;
 }
 .login p{
   font-size: 18px;
@@ -52,20 +55,44 @@
 .block{
   display: block;
 }
+
 .sedes-selection{
-  padding: 40px 0;
+  padding: 40px 140px;
   text-align: center;
+  background-color: #f2f2f2;
 }
 .sedes-list{
-  padding: 80px 0;
+  padding: 40px 0;
   display: flex;
   justify-content: space-around;
 }
 .sedes-list img{
   margin: 20px 0;
 }
-.sedes-list button{
-  margin: 10px 0;
+.menu{
+  display: flex;
+  flex-direction: column;
+}
+.sedes-list h1{
+  margin: 5px 0;
+  padding: 10px 0;
+  font-weight: 700;
+}
+.itenList{
+  margin: 3px auto;
+  padding: 10px;
+  background-color: #ffc107;
+  border: 0;
+  cursor: pointer;
+}
+.itenList:hover{
+  font-weight: 700;
+}
+#sp-select{
+  padding: 10px;
+  background-color: #d5d5d5;
+  border: 0;
+  margin: 5px auto;
 }
 .peru, .mexico, .chile, .brasil{
   display: flex;
@@ -86,28 +113,35 @@ header .logo{
   height: 25px;
 }
 #menu{
-  width: 20%;
+  width: 17%;
   position: fixed;
   top: 45px;
   height: 100%;
   float: left;
-  font-weight: 700;
-  /* background-color: #f2f2f2; */
-  background-color: #1d1f29;
+  background-color: #f2f2f2;
+  /* background-color: #1d1f29; */
 }
 #menu ul li{
   text-align: center;
 }
 #menu a{
-  display: block;
-  padding: 25px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
   text-decoration: none;
-  color: #fff;
+  font-weight: 400;
+  /* color: #fff; */
+  color: #000;
   text-transform: uppercase;
+}
+#menu span{
+  font-size: 30px;
 }
 #menu #dash{
   background-color: #ffc107;
   color: #000;
+  font-weight: 700;
 }
 #menu a:hover{
   background-color: #ffc107;
@@ -115,12 +149,39 @@ header .logo{
 }
 #content{
   margin-top: 50px;
-  width: 80%;
+  width: 83%;
   float: right;
+  display: flex;
 }
-.sedesBtn{
-  padding: 30px;
-  margin: 30px;
+.box{
+  margin: 10px;
+  padding: 20px;
+  text-align: center;
+  background-color: #f2f2f2;
+  box-shadow: 3px 5px 10px #d5d5d5;
+  display: inline-block;
+  width: 33%;
+}
+.box h1{
+  text-transform: uppercase;
+  font-size: 16px;
+  color: #ffc107;
+  margin-bottom: 10px;
+}
+.info-box{
+  background-color: #d5d5d5;
+  padding: 10px;
+  display: inline-block;
+  width: 45%;
+  margin: 5px;
+}
+.info-box p{
+  color: #1d1f29;
+  font-size: 16px;
+  font-weight: 700;
+}
+.info-box small{
+  text-transform: uppercase;
 }
 
 /* google translate */
