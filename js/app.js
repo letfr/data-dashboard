@@ -16,13 +16,13 @@ function displayChange(add, remove) {
 
 btnLogin.addEventListener("click", function (event) {
   event.preventDefault();
-  let username = document.querySelector(".username").value;
-  let password = document.querySelector(".password").value;
+  let username = document.querySelector(".username");
+  let password = document.querySelector(".password");
 
-  if (username === "ju" && password === "gatos") { displayChange(sedesSelection, login); }
-  else if (username === "rafa" && password === "123456789") { displayChange(sedesSelection, login); }
-  else if (username === "vanessa" && password === "laboratoria") { displayChange(sedesSelection, login); }
-  else { alert("Senha ou usuário inválido."); }
+  if (username.value === "ju" && password.value === "gatos") { displayChange(sedesSelection, login); }
+  else if (username.value === "rafa" && password.value === "123456789") { displayChange(sedesSelection, login); }
+  else if (username.value === "vanessa" && password.value === "laboratoria") { displayChange(sedesSelection, login); }
+  else { username.style.border = "1px solid red"; password.style.border = "1px solid red"; }
 });
 
 // SELEÇÃO DE SEDE  
