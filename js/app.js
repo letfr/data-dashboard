@@ -107,6 +107,62 @@ function drawStacked(nps,promoters,passive,detractors) {
     }
   };
   var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+  chart.draw(data,options);
+}
+// GRÁFICO TECH SCORE
+function drawChartTech(scoreTech,scoreTechNot) {
+  var chart = new google.visualization.PieChart(document.getElementById('tech-chart'));
+  var data = google.visualization.arrayToDataTable([
+    ['Status', 'Total'],
+    ['Atingem', scoreTech],
+    ['Não atingem', scoreTechNot]
+  ]) 
+  var options =  {
+    title: 'Total de alunas: ' + (scoreTech + scoreTechNot).toString(),
+    backgroundColor : "#f2f2f2",
+    chartArea: {width: '100%', height: '90%'},
+    is3D: true,
+    slices: {
+      0: { color: '#F47D91' },
+      1: { color: '#62BAA4' }
+    }
+  };
+  chart.draw(data, options);
+}
+// GRÁFICO HSE SCORE
+function drawChartHSE(scoreHSE,scoreHSENot) {
+  var chart = new google.visualization.PieChart(document.getElementById('hse-chart'));
+  var data = google.visualization.arrayToDataTable([
+    ['Status', 'Total'],
+    ['Atingem', scoreHSE],
+    ['Não atingem', scoreHSENot]
+  ]) 
+  var options =  {
+    title: 'Total de alunas: ' + (scoreHSE + scoreHSENot).toString(),
+    backgroundColor : "#f2f2f2",
+    chartArea: {width: '100%', height: '90%'},
+    is3D: true,
+    slices: {
+      0: { color: '#F47D91' },
+      1: { color: '#62BAA4' }
+    }
+  };
+  chart.draw(data, options);
+}
+// GRÁFICO DE SATISFAÇÃO DAS ALUNAS
+function drawSatisfaction(reaches,doesntReach,overcomes,sprints) {
+  var data = google.visualization.arrayToDataTable([
+    ['Satisfação Laboratória', 'Cumpre',{ role: 'style' }, 'Não cumpre',{ role: 'style' }, 'Supera', { role: 'style' }],
+    ['Satisfação', parseInt(reaches/sprints), "#FFCD5A", parseInt(doesntReach/sprints),"#62BAA4", parseInt(overcomes/sprints), "#F47D91"]
+  ]);
+  var options = {
+    title: 'A Laboratoria cumpre suas expectativas?',
+    chartArea: {width: '90%'},
+    isStacked: "percent",
+    backgroundColor : "#f2f2f2",
+    legend: {position: 'none'},
+  };
+  var chart = new google.visualization.BarChart(document.getElementById('chart-satisfaction'));
   chart.draw(data, options);
 }
 // ENVIANDO INFORMAÇÕES PARA DASHBOARD
@@ -114,11 +170,14 @@ let sprints = 0;
 let sprint = 0;
 function dashboardInfo(sd, trm) {
   let scoreTech = 0;
+  let scoreTechNot = 0;
   let scoreHSE = 0;
+  let scoreHSENot = 0;
   let promoters = 0;
   let passive = 0;
   let detractors = 0;
   let reaches = 0;
+  let doesntReach = 0;
   let overcomes = 0;
   let ratingTeacher = 0;
   let ratingJedi = 0;
@@ -128,13 +187,17 @@ function dashboardInfo(sd, trm) {
   for (i in std) {
     if (std[i]["active"] === true) { activeStudents += 1; }
     else if (std[i]["active"] === false) { dropoutStudents += 1; }
-    drawChart(activeStudents,dropoutStudents);
+
     for (j in std[i]["sprints"]) {
       if (std[i]["sprints"][j]["score"]["tech"] >= 1260) {
         scoreTech += 1;
+      } else {
+        scoreTechNot += 1;
       }
       if (std[i]["sprints"][j]["score"]["hse"] >= 840) {
         scoreHSE += 1;
+      } else {
+        scoreHSENot += 1;
       }
       if (std[i]["sprints"][j]["score"]["tech"] >= 1260 && std[i]["sprints"][j]["score"]["hse"] >= 840) {
         targetStudents += 1;
@@ -142,7 +205,6 @@ function dashboardInfo(sd, trm) {
       sprint = std[i]["sprints"];
       sprints = std[i]["sprints"].length;
     }
-
   }
   targetStudents = targetStudents / sprints;
   if (isNaN(targetStudents)) {
@@ -155,11 +217,16 @@ function dashboardInfo(sd, trm) {
     passive = ratings[i]["nps"]["passive"];
     detractors = ratings[i]["nps"]["detractors"];
     reaches += data[sd][trm]["ratings"][i]["student"]["cumple"];
+    doesntReach += data[sd][trm]["ratings"][i]["student"]["no-cumple"];
     overcomes += data[sd][trm]["ratings"][i]["student"]["supera"];
     ratingTeacher += data[sd][trm]["ratings"][i]["teacher"];
     ratingJedi += data[sd][trm]["ratings"][i]["jedi"];
   }
+  drawChart(activeStudents,dropoutStudents);
   drawStacked(totalNps,promoters,passive,detractors);
+  drawChartTech(scoreTech,scoreTechNot);
+  drawChartHSE(scoreHSE,scoreHSENot); 
+  drawSatisfaction(reaches,doesntReach,overcomes,sprints);
   studentsStatus(sd, trm, std, ratings, overcomes, reaches);
   npsPercentual(totalNps, promoters, passive, detractors);
   studentsSatisfaction(overcomes, reaches, sprints);
@@ -210,18 +277,21 @@ function teacherRating(ratingTeacher, ratingJedi, sprints) {
   document.getElementsByClassName("info")[11].textContent = (ratingTeacher / sprints).toFixed(1);
   document.getElementsByClassName("info")[12].textContent = (ratingJedi / sprints).toFixed(1);
 }
-
 console.table(data);
-
+//GRAFICOS
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawStacked);
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChartTech);
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChartHSE);
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawSatisfaction);
 
 // GOOGLE TRANSLATE
 function googleTranslateElementInit2() { new google.translate.TranslateElement({ pageLanguage: 'pt-br', autoDisplay: false }, 'google_translate_element2'); }
 eval(function (p, a, c, k, e, r) { e = function (c) { return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) }; if (!''.replace(/^/, String)) { while (c--) r[e(c)] = k[c] || e(c); k = [function (e) { return r[e] }]; e = function () { return '\\w+' }; c = 1 }; while (c--) if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]); return p }('6 7(a,b){n{4(2.9){3 c=2.9("o");c.p(b,f,f);a.q(c)}g{3 c=2.r();a.s(\'t\'+b,c)}}u(e){}}6 h(a){4(a.8)a=a.8;4(a==\'\')v;3 b=a.w(\'|\')[1];3 c;3 d=2.x(\'y\');z(3 i=0;i<d.5;i++)4(d[i].A==\'B-C-D\')c=d[i];4(2.j(\'k\')==E||2.j(\'k\').l.5==0||c.5==0||c.l.5==0){F(6(){h(a)},G)}g{c.8=b;7(c,\'m\');7(c,\'m\')}}', 43, 43, '||document|var|if|length|function|GTranslateFireEvent|value|createEvent||||||true|else|doGTranslate||getElementById|google_translate_element2|innerHTML|change|try|HTMLEvents|initEvent|dispatchEvent|createEventObject|fireEvent|on|catch|return|split|getElementsByTagName|select|for|className|goog|te|combo|null|setTimeout|500'.split('|'), 0, {}))
 
-//GRAFICOS
-google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart);
-
-google.charts.load('current', {packages: ['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawStacked);
 
