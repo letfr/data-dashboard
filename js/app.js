@@ -94,7 +94,7 @@ function drawStacked(nps,promoters,passive,detractors) {
     ['Name', '%', { role: 'style' }],
     ['NPS', nps, "#F47D91"],
     ['Promoters', promoters, "#62BAA4"],
-    ['Passive', passive, "#00A7A9"],
+    ['Passive', passive, "#0A8EC0"],
     ['Detractors', detractors, "#FFCD5A"]
   ]);
 
@@ -123,8 +123,8 @@ function drawChartTech(scoreTech,scoreTechNot) {
     chartArea: {width: '100%', height: '90%'},
     is3D: true,
     slices: {
-      0: { color: '#F47D91' },
-      1: { color: '#62BAA4' }
+      0: { color: '#0A8EC0' },
+      1: { color: '#FFCD5A' }
     }
   };
   chart.draw(data, options);
@@ -153,7 +153,7 @@ function drawChartHSE(scoreHSE,scoreHSENot) {
 function drawSatisfaction(reaches,doesntReach,overcomes,sprints) {
   var data = google.visualization.arrayToDataTable([
     ['Satisfação Laboratória', 'Cumpre',{ role: 'style' }, 'Não cumpre',{ role: 'style' }, 'Supera', { role: 'style' }],
-    ['Satisfação', parseInt(reaches/sprints), "#FFCD5A", parseInt(doesntReach/sprints),"#62BAA4", parseInt(overcomes/sprints), "#F47D91"]
+    ['Satisfação', parseInt(reaches/sprints), "#FFCD5A", parseInt(doesntReach/sprints),"#0A8EC0", parseInt(overcomes/sprints), "#F47D91"]
   ]);
   var options = {
     title: 'A Laboratoria cumpre suas expectativas?',
