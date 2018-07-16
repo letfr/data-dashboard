@@ -142,6 +142,7 @@ function techScore(scoreTech, totalStudents, sprint) {
   for (i in sprint) {
     let option = document.createElement("option");
     option.textContent = "sprint " + (parseInt(i) + 1);
+    option.value = "sprint " + (parseInt(i) + 1);
     select.appendChild(option);
   }
   document.getElementsByClassName("info")[6].textContent = Math.round(scoreTech / sprints);
@@ -153,9 +154,14 @@ function hseScore(scoreHSE, totalStudents, sprint) {
     let option = document.createElement("option");
     option.textContent = "sprint " + (parseInt(i) + 1);
     select.appendChild(option);
+    if (select.value === option.textContent) {
+      console.log("sasdasd")
+    }
   }
-  document.getElementsByClassName("info")[8].textContent = Math.round(scoreHSE / sprints);
-  document.getElementsByClassName("info")[9].textContent = ((scoreHSE / sprints) / totalStudents * 100).toFixed(1) + "%";
+  if (select.value === "sprint") {
+    document.getElementsByClassName("info")[8].textContent = Math.round(scoreHSE / sprints);
+    document.getElementsByClassName("info")[9].textContent = ((scoreHSE / sprints) / totalStudents * 100).toFixed(1) + "%";
+  }
 }
 function studentsSatisfaction(overcomes, reaches, sprints) {
   document.getElementsByClassName("info")[10].textContent = ((overcomes + reaches) / sprints).toFixed(1) + "%";
