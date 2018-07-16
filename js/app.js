@@ -110,15 +110,15 @@ function drawStacked(nps,promoters,passive,detractors) {
   chart.draw(data,options);
 }
 // GRÁFICO TECH SCORE
-function drawChartTech(scoreTech,scoreTechNot) {
+function drawChartTech(scoreTech,scoreTechNot,sprints) {
   var chart = new google.visualization.PieChart(document.getElementById('tech-chart'));
   var data = google.visualization.arrayToDataTable([
     ['Status', 'Total'],
-    ['Atingem', scoreTech],
-    ['Não atingem', scoreTechNot]
+    ['Atingem', Math.round(scoreTech / sprints)],
+    ['Não atingem', Math.round(scoreTechNot / sprints)]
   ]) 
   var options =  {
-    title: 'Total de alunas: ' + (scoreTech + scoreTechNot).toString(),
+    title: 'Total de alunas: ' + (Math.round(scoreTech / sprints) + Math.round(scoreTechNot / sprints)).toString(),
     backgroundColor : "#f2f2f2",
     chartArea: {width: '100%', height: '90%'},
     is3D: true,
@@ -130,15 +130,15 @@ function drawChartTech(scoreTech,scoreTechNot) {
   chart.draw(data, options);
 }
 // GRÁFICO HSE SCORE
-function drawChartHSE(scoreHSE,scoreHSENot) {
+function drawChartHSE(scoreHSE,scoreHSENot,sprints) {
   var chart = new google.visualization.PieChart(document.getElementById('hse-chart'));
   var data = google.visualization.arrayToDataTable([
     ['Status', 'Total'],
-    ['Atingem', scoreHSE],
-    ['Não atingem', scoreHSENot]
+    ['Atingem', Math.round(scoreHSE / sprints)],
+    ['Não atingem', Math.round(scoreHSENot / sprints)]
   ]) 
   var options =  {
-    title: 'Total de alunas: ' + (scoreHSE + scoreHSENot).toString(),
+    title: 'Total de alunas: ' + (Math.round(scoreHSE / sprints) + Math.round(scoreHSENot / sprints)).toString(),
     backgroundColor : "#f2f2f2",
     chartArea: {width: '100%', height: '90%'},
     is3D: true,
@@ -224,8 +224,8 @@ function dashboardInfo(sd, trm) {
   }
   drawChart(activeStudents,dropoutStudents);
   drawStacked(totalNps,promoters,passive,detractors);
-  drawChartTech(scoreTech,scoreTechNot);
-  drawChartHSE(scoreHSE,scoreHSENot); 
+  drawChartTech(scoreTech,scoreTechNot,sprints);
+  drawChartHSE(scoreHSE,scoreHSENot,sprints); 
   drawSatisfaction(reaches,doesntReach,overcomes,sprints);
   studentsStatus(sd, trm, std, ratings, overcomes, reaches);
   npsPercentual(totalNps, promoters, passive, detractors);
