@@ -6,7 +6,7 @@ let content = document.querySelector("#content");
 let login = document.querySelector(".login");
 let activeStudents = 0;
 let dropoutStudents = 0;
-let targetStudentss = 0;
+let targetStudents = 0;
 let totalNps = 0;
 
 function displayChange(add, remove) {
@@ -33,7 +33,6 @@ for (x in itenList) {
     sedesSelection.classList.add("none");
   };
 }
-
 // SANTIAGO
 let santiago1 = document.querySelector("#santiago1").addEventListener("click", function () {
   dashboardInfo("SCL", itenList[0].textContent);
@@ -69,52 +68,101 @@ let lima3 = document.querySelector("#lima3").addEventListener("click", function 
   dashboardInfo("LIM", itenList[9].textContent);
 });
 
-
 // ENVIANDO INFORMAÇÕES PARA DASHBOARD
 let sprints = 0;
+let sprint = 0;
 function dashboardInfo(sd, trm) {
+  let scoreTech = 0;
+  let scoreHSE = 0;
+  let promoters = 0;
+  let passive = 0;
+  let detractors = 0;
+  let reaches = 0;
+  let overcomes = 0;
+  let ratingTeacher = 0;
+  let ratingJedi = 0;
   let std = data[sd][trm]["students"];
+  let ratings = data[sd][trm]["ratings"];
+  // DADOS DAS ESTUDANTES
   for (i in std) {
     if (std[i]["active"] === true) { activeStudents += 1; }
     else if (std[i]["active"] === false) { dropoutStudents += 1; }
     for (j in std[i]["sprints"]) {
-      if (std[i]["sprints"]) {
-        if (std[i]["sprints"][j]["score"]["tech"] > 1260 && std[i]["sprints"][j]["score"]["hse"] > 840) {
-          targetStudentss += 1;
-          sprints = std[i]["sprints"].length;
-        }
-      } else if (!std[i]["sprints"] || targetStudentss > 0) {
-        sprints = 1;
+      if (std[i]["sprints"][j]["score"]["tech"] >= 1260) {
+        scoreTech += 1;
       }
+      if (std[i]["sprints"][j]["score"]["hse"] >= 840) {
+        scoreHSE += 1;
+      }
+      if (std[i]["sprints"][j]["score"]["tech"] >= 1260 && std[i]["sprints"][j]["score"]["hse"] >= 840) {
+        targetStudents += 1;
+      }
+      sprint = std[i]["sprints"];
+      sprints = std[i]["sprints"].length;
     }
-  }
 
-  let ratings = data[sd][trm]["ratings"];
+  }
+  targetStudents = targetStudents / sprints;
+  if (isNaN(targetStudents)) {
+    targetStudents = 0;
+  }
+  // DADOS DE AVALIAÇÕES
   for (i in ratings) {
     totalNps = ratings[i]["nps"]["promoters"] - ratings[i]["nps"]["detractors"];
+    promoters = ratings[i]["nps"]["promoters"];
+    passive = ratings[i]["nps"]["passive"];
+    detractors = ratings[i]["nps"]["detractors"];
+    reaches += data[sd][trm]["ratings"][i]["student"]["cumple"];
+    overcomes += data[sd][trm]["ratings"][i]["student"]["supera"];
+    ratingTeacher += data[sd][trm]["ratings"][i]["teacher"];
+    ratingJedi += data[sd][trm]["ratings"][i]["jedi"];
   }
-  let promoters = ratings[i]["nps"]["promoters"];
-  let passive = ratings[i]["nps"]["passive"];
-  let detractors = ratings[i]["nps"]["detractors"];
-
-  targetStudentss = targetStudentss / sprints;
-
-  createElements(sd, trm, std, ratings, totalNps, promoters, passive, detractors);
+  studentsStatus(sd, trm, std, ratings, overcomes, reaches);
+  npsPercentual(totalNps, promoters, passive, detractors);
+  studentsSatisfaction(overcomes, reaches, sprints);
+  teacherRating(ratingTeacher, ratingJedi, sprints);
+  techScore(scoreTech, std.length, sprint);
+  hseScore(scoreHSE, std.length, sprint);
 }
 
-function createElements(sd, trm, std, ratings, totalNps, promoters, passive, detractors) {
+function studentsStatus(sd, trm, std, ratings) {
   document.getElementsByClassName("info")[0].textContent = activeStudents;
-  // PERCENTUAL DESISTENTES
   document.getElementsByClassName("info")[1].textContent = (dropoutStudents / data[sd][trm]["students"].length * 100).toFixed(1) + "%";
-  // ALUNAS QUE EXCEDEM A META DE PONTOS
-  document.getElementsByClassName("info")[2].textContent = Math.round(targetStudentss);
-  // PERCENTUAL EXCEDEM A META
-  document.getElementsByClassName("info")[3].textContent = (targetStudentss / std.length * 100).toFixed(1) + "%";
-  // NPS PERCENTUAL
+  document.getElementsByClassName("info")[2].textContent = Math.round(targetStudents);
+  document.getElementsByClassName("info")[3].textContent = (targetStudents / std.length * 100).toFixed(1) + "%";
+}
+function npsPercentual(totalNps, promoters, passive, detractors) {
   document.getElementsByClassName("info")[4].textContent = totalNps + "%";
   document.getElementsByClassName("info-label")[0].textContent = promoters + "% Promoters";
   document.getElementsByClassName("info-label")[1].textContent = passive + "% Passive";
   document.getElementsByClassName("info-label")[2].textContent = detractors + "% Detractors";
+}
+function techScore(scoreTech, totalStudents, sprint) {
+  let select = document.querySelector("#drop-menu");
+  for (i in sprint) {
+    let option = document.createElement("option");
+    option.textContent = "sprint " + (parseInt(i) + 1);
+    select.appendChild(option);
+  }
+  document.getElementsByClassName("info")[6].textContent = Math.round(scoreTech / sprints);
+  document.getElementsByClassName("info")[7].textContent = ((scoreTech / sprints) / totalStudents * 100).toFixed(1) + "%";
+}
+function hseScore(scoreHSE, totalStudents, sprint) {
+  let select = document.querySelector("#drop-menu1");
+  for (i in sprint) {
+    let option = document.createElement("option");
+    option.textContent = "sprint " + (parseInt(i) + 1);
+    select.appendChild(option);
+  }
+  document.getElementsByClassName("info")[8].textContent = Math.round(scoreHSE / sprints);
+  document.getElementsByClassName("info")[9].textContent = ((scoreHSE / sprints) / totalStudents * 100).toFixed(1) + "%";
+}
+function studentsSatisfaction(overcomes, reaches, sprints) {
+  document.getElementsByClassName("info")[10].textContent = ((overcomes + reaches) / sprints).toFixed(1) + "%";
+}
+function teacherRating(ratingTeacher, ratingJedi, sprints) {
+  document.getElementsByClassName("info")[11].textContent = (ratingTeacher / sprints).toFixed(1);
+  document.getElementsByClassName("info")[12].textContent = (ratingJedi / sprints).toFixed(1);
 }
 
 console.table(data);

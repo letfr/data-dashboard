@@ -10,6 +10,8 @@
 body{
   background-image: url("../assets/images/Elegant_Background-15.jpg");
   background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 .login{
   display: flex;
