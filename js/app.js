@@ -67,7 +67,26 @@ let lima2 = document.querySelector("#lima2").addEventListener("click", function 
 let lima3 = document.querySelector("#lima3").addEventListener("click", function () {
   dashboardInfo("LIM", itenList[9].textContent);
 });
-
+// GRÁFICOS
+// GRÁFICO ALUNAS ATIVAS
+function drawChart(activeStudents,dropoutStudents) {
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  var data = google.visualization.arrayToDataTable([
+    ['Status', 'Total'],
+    ['Ativas', activeStudents],
+    ['Desistencias', dropoutStudents]
+  ]) 
+  var options =  {
+    title: 'Total de alunas: ' + (activeStudents + dropoutStudents).toString(),
+    backgroundColor : "#f2f2f2",
+    is3D: true,
+    slices: {
+      0: { color: '#F47D91' },
+      1: { color: '#62BAA4' }
+    }
+  };
+  chart.draw(data, options);
+}
 // ENVIANDO INFORMAÇÕES PARA DASHBOARD
 let sprints = 0;
 let sprint = 0;
@@ -87,6 +106,7 @@ function dashboardInfo(sd, trm) {
   for (i in std) {
     if (std[i]["active"] === true) { activeStudents += 1; }
     else if (std[i]["active"] === false) { dropoutStudents += 1; }
+    drawChart(activeStudents,dropoutStudents);
     for (j in std[i]["sprints"]) {
       if (std[i]["sprints"][j]["score"]["tech"] >= 1260) {
         scoreTech += 1;
@@ -154,9 +174,6 @@ function hseScore(scoreHSE, totalStudents, sprint) {
     let option = document.createElement("option");
     option.textContent = "sprint " + (parseInt(i) + 1);
     select.appendChild(option);
-    if (select.value === option.textContent) {
-      console.log("sasdasd")
-    }
   }
   if (select.value === "sprint") {
     document.getElementsByClassName("info")[8].textContent = Math.round(scoreHSE / sprints);
@@ -182,24 +199,3 @@ eval(function (p, a, c, k, e, r) { e = function (c) { return (c < a ? '' : e(par
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
-function drawChart() {
-  var isActive = 0;
-  var isInactive = 0;
-  for(sede in data) {
-    for (turma in data[sede]) {
-      for (i in data[sede][turma]["students"]) {
-        if (data[sede][turma]["students"][i]["active"] === true) {
-          isActive += 1;
-        } else if (data[sede][turma]["students"][i]["active"] === false) {
-          isInactive += 1;
-        }
-      }
-    }
-  }
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-  chart.draw(google.visualization.arrayToDataTable([
-    ['Status', 'Total'],
-    ['Active', isActive],
-    ['Inactive', isInactive]
-  ]), {title: 'Enrolled students in all classes: ' + (isActive + isInactive).toString()});
-}
