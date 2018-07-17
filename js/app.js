@@ -96,8 +96,8 @@ function drawChartTargetStudents(targetStudents, nottargetStudents, sprints, std
   var chart = new google.visualization.PieChart(document.getElementById('targetStudents-chart'));
   var data = google.visualization.arrayToDataTable([
     ['Status', 'Total'],
-    ['Excedem a meta', Math.round(targetStudents)],
-    ['Não excedem', Math.round(nottargetStudents / sprints)]
+    ['Excedem a meta (alunas ativas)', Math.round(targetStudents)],
+    ['Não excedem (alunas ativas)', Math.round(nottargetStudents / sprints)]
   ]);
   var options =  {
     title: 'Total de alunas: ' + (Math.round(std.length)).toString(),
