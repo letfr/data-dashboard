@@ -6,6 +6,7 @@ let content = document.querySelector("#content");
 let login = document.querySelector(".login");
 let activeStudents = 0;
 let dropoutStudents = 0;
+let nottargetStudents = 0;
 let totalNps = 0;
 let sprints = 0;
 let sprint = 0;
@@ -89,6 +90,28 @@ function drawChart(activeStudents, dropoutStudents) {
   };
   chart.draw(data, options);
 }
+
+// GRÁFICO ALUNAS QUE EXCEDEM A META
+function drawChartTargetStudents(targetStudents, nottargetStudents, sprints, std) {
+  var chart = new google.visualization.PieChart(document.getElementById('targetStudents-chart'));
+  var data = google.visualization.arrayToDataTable([
+    ['Status', 'Total'],
+    ['Excedem a meta', Math.round(targetStudents)],
+    ['Não excedem', Math.round(nottargetStudents / sprints)]
+  ]);
+  var options =  {
+    title: 'Total de alunas: ' + (Math.round(std.length)).toString(),
+    backgroundColor : "#f2f2f2",
+    chartArea: {width: '100%', height: '90%'},
+    pieHole: 0.5,
+    slices: {
+      0: { color: '#0A8EC0' },
+      1: { color: '#FDAD84' }
+    }
+  };
+  chart.draw(data, options);
+}
+
 // GRÁFICO NPS
 function drawStacked(nps, promoters, passive, detractors) {
   let data = google.visualization.arrayToDataTable([
@@ -239,7 +262,7 @@ function dashboardInfo(sd, trm) {
       if (std[i]["sprints"][j]["score"]["tech"] >= 1260 && std[i]["sprints"][j]["score"]["hse"] >= 840) {
         targetStudents += 1;
       } else {
-        targetNot += 1;
+        nottargetStudents += 1;
       }
       sprint = std[i]["sprints"];
       sprints = std[i]["sprints"].length;
@@ -263,6 +286,7 @@ function dashboardInfo(sd, trm) {
     rating.jedi += data[sd][trm]["ratings"][i]["jedi"];
   }
   drawChart(activeStudents, dropoutStudents);
+  drawChartTargetStudents(targetStudents, nottargetStudents, sprints, std);
   drawStacked(totalNps, rating.promoters, rating.passive, rating.detractors);
   drawChartTech(score.tech, score.techNot, sprints);
   drawChartHSE(score.hse, score.hseNot, sprints);
@@ -335,9 +359,9 @@ google.charts.load('current', { 'packages': ['bar'] });
 google.charts.setOnLoadCallback(mentorsChart);
 google.charts.load('current', { 'packages': ['bar'] });
 google.charts.setOnLoadCallback(jediChart);
+google.charts.load('current', { 'packages': ['corechart'] });
+google.charts.setOnLoadCallback(drawChartTargetStudents);
 
 // GOOGLE TRANSLATE
 function googleTranslateElementInit2() { new google.translate.TranslateElement({ pageLanguage: 'pt-br', autoDisplay: false }, 'google_translate_element2'); }
 eval(function (p, a, c, k, e, r) { e = function (c) { return (c < a ? '' : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36)) }; if (!''.replace(/^/, String)) { while (c--) r[e(c)] = k[c] || e(c); k = [function (e) { return r[e] }]; e = function () { return '\\w+' }; c = 1 }; while (c--) if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]); return p }('6 7(a,b){n{4(2.9){3 c=2.9("o");c.p(b,f,f);a.q(c)}g{3 c=2.r();a.s(\'t\'+b,c)}}u(e){}}6 h(a){4(a.8)a=a.8;4(a==\'\')v;3 b=a.w(\'|\')[1];3 c;3 d=2.x(\'y\');z(3 i=0;i<d.5;i++)4(d[i].A==\'B-C-D\')c=d[i];4(2.j(\'k\')==E||2.j(\'k\').l.5==0||c.5==0||c.l.5==0){F(6(){h(a)},G)}g{c.8=b;7(c,\'m\');7(c,\'m\')}}', 43, 43, '||document|var|if|length|function|GTranslateFireEvent|value|createEvent||||||true|else|doGTranslate||getElementById|google_translate_element2|innerHTML|change|try|HTMLEvents|initEvent|dispatchEvent|createEventObject|fireEvent|on|catch|return|split|getElementsByTagName|select|for|className|goog|te|combo|null|setTimeout|500'.split('|'), 0, {}))
-
-
