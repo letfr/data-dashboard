@@ -6,8 +6,9 @@ let content = document.querySelector("#content");
 let login = document.querySelector(".login");
 let activeStudents = 0;
 let dropoutStudents = 0;
-let targetStudents = 0;
 let totalNps = 0;
+let sprints = 0;
+let sprint = 0;
 
 function displayChange(add, remove) {
   add.classList.remove("none");
@@ -26,7 +27,7 @@ btnLogin.addEventListener("click", function (event) {
 });
 
 // SELEÇÃO DE SEDE
-var itenList = document.getElementsByClassName("itenList");
+let itenList = document.getElementsByClassName("itenList");
 for (x in itenList) {
   itenList[x].onclick = function () {
     dashboard.classList.remove("none");
@@ -69,17 +70,17 @@ let lima3 = document.querySelector("#lima3").addEventListener("click", function 
 });
 // GRÁFICOS
 // GRÁFICO ALUNAS ATIVAS
-function drawChart(activeStudents,dropoutStudents) {
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-  var data = google.visualization.arrayToDataTable([
+function drawChart(activeStudents, dropoutStudents) {
+  let chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  let data = google.visualization.arrayToDataTable([
     ['Status', 'Total'],
     ['Ativas', activeStudents],
     ['Desistencias', dropoutStudents]
-  ]) 
-  var options =  {
+  ])
+  let options = {
     title: 'Total de alunas: ' + (activeStudents + dropoutStudents).toString(),
-    backgroundColor : "#f2f2f2",
-    chartArea: {width: '100%', height: '90%'},
+    backgroundColor: "#f2f2f2",
+    chartArea: { width: '100%', height: '90%' },
     is3D: true,
     slices: {
       0: { color: '#7570b3' },
@@ -89,8 +90,8 @@ function drawChart(activeStudents,dropoutStudents) {
   chart.draw(data, options);
 }
 // GRÁFICO NPS
-function drawStacked(nps,promoters,passive,detractors) {
-  var data = google.visualization.arrayToDataTable([
+function drawStacked(nps, promoters, passive, detractors) {
+  let data = google.visualization.arrayToDataTable([
     ['Name', '%', { role: 'style' }],
     ['NPS', nps, "#F47D91"],
     ['Promoters', promoters, "#62BAA4"],
@@ -98,29 +99,29 @@ function drawStacked(nps,promoters,passive,detractors) {
     ['Detractors', detractors, "#FFCD5A"]
   ]);
 
-  var options = {
-    chartArea: {width: '60%', height: '90%'},
+  let options = {
+    chartArea: { width: '60%', height: '90%' },
     isStacked: true,
-    backgroundColor : "#f2f2f2",
+    backgroundColor: "#f2f2f2",
     legend: {
-    position: "none"
+      position: "none"
     }
   };
-  var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-  chart.draw(data,options);
+  let chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+  chart.draw(data, options);
 }
 // GRÁFICO TECH SCORE
-function drawChartTech(scoreTech,scoreTechNot,sprints) {
-  var chart = new google.visualization.PieChart(document.getElementById('tech-chart'));
-  var data = google.visualization.arrayToDataTable([
+function drawChartTech(scoreTech, scoreTechNot, sprints) {
+  let chart = new google.visualization.PieChart(document.getElementById('tech-chart'));
+  let data = google.visualization.arrayToDataTable([
     ['Status', 'Total'],
-    ['Atingem (alunas ativas)', (scoreTech / sprints)],
-    ['Não atingem (alunas ativas)', (scoreTechNot / sprints)]
-  ]) 
-  var options =  {
+    ['Atingem (alunas ativas)', Math.round(scoreTech / sprints)],
+    ['Não atingem (alunas ativas)', Math.round(scoreTechNot / sprints)]
+  ])
+  let options = {
     title: 'Total de alunas: ',
-    backgroundColor : "#f2f2f2",
-    chartArea: {width: '100%', height: '90%'},
+    backgroundColor: "#f2f2f2",
+    chartArea: { width: '100%', height: '90%' },
     is3D: true,
     slices: {
       0: { color: '#0A8EC0' },
@@ -130,17 +131,17 @@ function drawChartTech(scoreTech,scoreTechNot,sprints) {
   chart.draw(data, options);
 }
 // GRÁFICO HSE SCORE
-function drawChartHSE(scoreHSE,scoreHSENot,sprints) {
-  var chart = new google.visualization.PieChart(document.getElementById('hse-chart'));
-  var data = google.visualization.arrayToDataTable([
+function drawChartHSE(scoreHSE, scoreHSENot, sprints) {
+  let chart = new google.visualization.PieChart(document.getElementById('hse-chart'));
+  let data = google.visualization.arrayToDataTable([
     ['Status', 'Total'],
     ['Atingem (alunas ativas)', Math.round(scoreHSE / sprints)],
     ['Não atingem (alunas ativas)', Math.round(scoreHSENot / sprints)]
-  ]) 
-  var options =  {
+  ])
+  let options = {
     title: 'Total de alunas: ',
-    backgroundColor : "#f2f2f2",
-    chartArea: {width: '100%', height: '90%'},
+    backgroundColor: "#f2f2f2",
+    chartArea: { width: '100%', height: '90%' },
     is3D: true,
     slices: {
       0: { color: '#F47D91' },
@@ -150,69 +151,73 @@ function drawChartHSE(scoreHSE,scoreHSENot,sprints) {
   chart.draw(data, options);
 }
 // GRÁFICO DE SATISFAÇÃO DAS ALUNAS
-function drawSatisfaction(reaches,doesntReach,overcomes,sprints) {
-  var data = google.visualization.arrayToDataTable([
-    ['Satisfação Laboratória', 'Cumpre',{ role: 'style' }, 'Não cumpre',{ role: 'style' }, 'Supera', { role: 'style' }],
-    ['Satisfação', reaches/sprints, "#FFCD5A", doesntReach/sprints,"#0A8EC0", overcomes/sprints, "#F47D91"]
+function drawSatisfaction(reaches, doesntReach, overcomes, sprints) {
+  let data = google.visualization.arrayToDataTable([
+    ['Satisfação Laboratória', 'Cumpre', { role: 'style' }, 'Não cumpre', { role: 'style' }, 'Supera', { role: 'style' }],
+    ['Satisfação', reaches / sprints, "#FFCD5A", doesntReach / sprints, "#0A8EC0", overcomes / sprints, "#F47D91"]
   ]);
-  var options = {
+  let options = {
     title: 'A Laboratoria cumpre suas expectativas?',
-    chartArea: {width: '90%'},
+    chartArea: { width: '90%' },
     isStacked: "percent",
-    backgroundColor : "#f2f2f2",
-    legend: {position: 'none'},
+    backgroundColor: "#f2f2f2",
+    legend: { position: 'none' },
   };
-  var chart = new google.visualization.BarChart(document.getElementById('chart-satisfaction'));
+  let chart = new google.visualization.BarChart(document.getElementById('chart-satisfaction'));
   chart.draw(data, options);
 }
 // GRÁFICO MÉDIA MENTORES
-function mentorsChart(ratingTeacher,sprints) {
-  var data = google.visualization.arrayToDataTable([
+function mentorsChart(ratingTeacher, sprints) {
+  let data = google.visualization.arrayToDataTable([
     ['Média', 'Pontuação máxima', 'Pontuação mentores'],
     ['Pontuação', (5.0).toFixed(1), ratingTeacher / sprints],
   ]);
-  var options = {
-    backgroundColor : "#f2f2f2",
+  let options = {
+    backgroundColor: "#f2f2f2",
     bars: 'vertical',
-    vAxis: {format: 'decimal'},
+    vAxis: { format: 'decimal' },
     height: 260,
     colors: ['#F47D91', '#7570b3'],
   };
-  var chart = new google.charts.Bar(document.getElementById('mentor-chart'));
+  let chart = new google.charts.Bar(document.getElementById('mentor-chart'));
   chart.draw(data, google.charts.Bar.convertOptions(options));
 }
 // GRÁFICO MÉDIA JEDI
-function jediChart(ratingJedi,sprints) {
-  var data = google.visualization.arrayToDataTable([
+function jediChart(ratingJedi, sprints) {
+  let data = google.visualization.arrayToDataTable([
     ['Média', 'Pontuação máxima', 'Pontuação mentores'],
     ['Pontuação', (5.0).toFixed(1), (ratingJedi / sprints)],
   ]);
-  var options = {
-    backgroundColor : "#f2f2f2",
+  let options = {
+    backgroundColor: "#f2f2f2",
     bars: 'vertical',
-    vAxis: {format: 'decimal'},
+    vAxis: { format: 'decimal' },
     height: 260,
-    colors: ['#62BAA4', '#FFCD5A'],
+    colors: ['#0A8EC0', '#FDAD84'],
   };
-  var chart = new google.charts.Bar(document.getElementById('jedi-chart'));
+  let chart = new google.charts.Bar(document.getElementById('jedi-chart'));
   chart.draw(data, google.charts.Bar.convertOptions(options));
 }
 // ENVIANDO INFORMAÇÕES PARA DASHBOARD
-let sprints = 0;
-let sprint = 0;
 function dashboardInfo(sd, trm) {
-  let scoreTech = 0;
-  let scoreTechNot = 0;
-  let scoreHSE = 0;
-  let scoreHSENot = 0;
-  let promoters = 0;
-  let passive = 0;
-  let detractors = 0;
-  let reaches = 0;
-  let doesntReach = 0;
-  let overcomes = 0;
-  let ratingTeacher = 0;
-  let ratingJedi = 0;
+  let targetStudents = 0;
+  let targetNot = 0;
+  let score = {
+    tech: 0,
+    techNot: 0,
+    hse: 0,
+    hseNot: 0
+  }
+  let rating = {
+    promoters: 0,
+    passive: 0,
+    detractors: 0,
+    reaches: 0,
+    doesntReach: 0,
+    overcomes: 0,
+    teacher: 0,
+    jedi: 0
+  }
   let std = data[sd][trm]["students"];
   let ratings = data[sd][trm]["ratings"];
   // DADOS DAS ESTUDANTES
@@ -222,57 +227,60 @@ function dashboardInfo(sd, trm) {
 
     for (j in std[i]["sprints"]) {
       if (std[i]["sprints"][j]["score"]["tech"] >= 1260) {
-        scoreTech += 1;
+        score.tech += 1;
       } else {
-        scoreTechNot += 1;
+        score.techNot += 1;
       }
       if (std[i]["sprints"][j]["score"]["hse"] >= 840) {
-        scoreHSE += 1;
+        score.hse += 1;
       } else {
-        scoreHSENot += 1;
+        score.hseNot += 1;
       }
       if (std[i]["sprints"][j]["score"]["tech"] >= 1260 && std[i]["sprints"][j]["score"]["hse"] >= 840) {
         targetStudents += 1;
+      } else {
+        targetNot += 1;
       }
       sprint = std[i]["sprints"];
       sprints = std[i]["sprints"].length;
     }
   }
-  targetStudents = targetStudents / sprints;
+  targetStudents = Math.round(targetStudents / sprints);
+  targetNot = Math.round(targetNot / sprints);
   if (isNaN(targetStudents)) {
     targetStudents = 0;
   }
   // DADOS DE AVALIAÇÕES
   for (i in ratings) {
     totalNps = ratings[i]["nps"]["promoters"] - ratings[i]["nps"]["detractors"];
-    promoters = ratings[i]["nps"]["promoters"];
-    passive = ratings[i]["nps"]["passive"];
-    detractors = ratings[i]["nps"]["detractors"];
-    reaches += data[sd][trm]["ratings"][i]["student"]["cumple"];
-    doesntReach += data[sd][trm]["ratings"][i]["student"]["no-cumple"];
-    overcomes += data[sd][trm]["ratings"][i]["student"]["supera"];
-    ratingTeacher += data[sd][trm]["ratings"][i]["teacher"];
-    ratingJedi += data[sd][trm]["ratings"][i]["jedi"];
+    rating.promoters = ratings[i]["nps"]["promoters"];
+    rating.passive = ratings[i]["nps"]["passive"];
+    rating.detractors = ratings[i]["nps"]["detractors"];
+    rating.reaches += data[sd][trm]["ratings"][i]["student"]["cumple"];
+    rating.doesntReach += data[sd][trm]["ratings"][i]["student"]["no-cumple"];
+    rating.overcomes += data[sd][trm]["ratings"][i]["student"]["supera"];
+    rating.teacher += data[sd][trm]["ratings"][i]["teacher"];
+    rating.jedi += data[sd][trm]["ratings"][i]["jedi"];
   }
-  drawChart(activeStudents,dropoutStudents);
-  drawStacked(totalNps,promoters,passive,detractors);
-  drawChartTech(scoreTech,scoreTechNot,sprints);
-  drawChartHSE(scoreHSE,scoreHSENot,sprints); 
-  drawSatisfaction(reaches,doesntReach,overcomes,sprints);
-  mentorsChart(ratingTeacher,sprints);
-  jediChart(ratingJedi,sprints);
-  studentsStatus(sd, trm, std, ratings, overcomes, reaches);
-  npsPercentual(totalNps, promoters, passive, detractors);
-  studentsSatisfaction(overcomes, reaches, sprints);
-  teacherRating(ratingTeacher, ratingJedi, sprints);
-  techScore(scoreTech, std.length, sprint);
-  hseScore(scoreHSE, std.length, sprint);
+  drawChart(activeStudents, dropoutStudents);
+  drawStacked(totalNps, rating.promoters, rating.passive, rating.detractors);
+  drawChartTech(score.tech, score.techNot, sprints);
+  drawChartHSE(score.hse, score.hseNot, sprints);
+  drawSatisfaction(rating.reaches, rating.doesntReach, rating.overcomes, sprints);
+  mentorsChart(rating.teacher, sprints);
+  jediChart(rating.jedi, sprints);
+  studentsStatus(sd, trm, std, ratings, targetStudents);
+  npsPercentual(totalNps, rating.promoters, rating.passive, rating.detractors);
+  studentsSatisfaction(rating.overcomes, rating.reaches, sprints);
+  teacherRating(rating.teacher, rating.jedi, sprints);
+  techScore(score.tech, std.length, sprint);
+  hseScore(score.hse, std.length, sprint);
 }
 
-function studentsStatus(sd, trm, std, ratings) {
+function studentsStatus(sd, trm, std, ratings, targetStudents) {
   document.getElementsByClassName("info")[0].textContent = activeStudents;
   document.getElementsByClassName("info")[1].textContent = (dropoutStudents / data[sd][trm]["students"].length * 100).toFixed(1) + "%";
-  document.getElementsByClassName("info")[2].textContent = Math.round(targetStudents);
+  document.getElementsByClassName("info")[2].textContent = targetStudents;
   document.getElementsByClassName("info")[3].textContent = (targetStudents / std.length * 100).toFixed(1) + "%";
 }
 function npsPercentual(totalNps, promoters, passive, detractors) {
@@ -313,19 +321,19 @@ function teacherRating(ratingTeacher, ratingJedi, sprints) {
 }
 console.table(data);
 //GRAFICOS
-google.charts.load('current', {'packages':['corechart']});
+google.charts.load('current', { 'packages': ['corechart'] });
 google.charts.setOnLoadCallback(drawChart);
-google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.load('current', { packages: ['corechart', 'bar'] });
 google.charts.setOnLoadCallback(drawStacked);
-google.charts.load('current', {'packages':['corechart']});
+google.charts.load('current', { 'packages': ['corechart'] });
 google.charts.setOnLoadCallback(drawChartTech);
-google.charts.load('current', {'packages':['corechart']});
+google.charts.load('current', { 'packages': ['corechart'] });
 google.charts.setOnLoadCallback(drawChartHSE);
-google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.load('current', { packages: ['corechart', 'bar'] });
 google.charts.setOnLoadCallback(drawSatisfaction);
-google.charts.load('current', {'packages':['bar']});
+google.charts.load('current', { 'packages': ['bar'] });
 google.charts.setOnLoadCallback(mentorsChart);
-google.charts.load('current', {'packages':['bar']});
+google.charts.load('current', { 'packages': ['bar'] });
 google.charts.setOnLoadCallback(jediChart);
 
 // GOOGLE TRANSLATE
