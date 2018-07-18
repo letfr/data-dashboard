@@ -65,7 +65,7 @@ body{
   display: block;
 } */
 .flex{
-  display: flex; 
+  display: flex;
   justify-content: space-around;
 }
 .sedes-selection{
@@ -181,13 +181,6 @@ header .logo{
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
-/* #construcao{
-  display: none;
-  justify-content: center;
-}
-#construcao img{
-  margin: 100px 0;
-} */
 #alunas{
   display: none;
 }
@@ -201,7 +194,7 @@ header .logo{
   flex-direction: column;
 }
 .box:hover, .box1:hover{
-  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.4); 
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.4);
 }
 .box{
   width: 31.5%;

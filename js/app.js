@@ -80,6 +80,11 @@ let logoutBtn = document.querySelector("#logout").addEventListener("click", func
   displayChange(login, dashboard);
 });
 
+// PAGE DASHBOARD INDO PARA ALUNAS
+let alunaBtn = document.querySelector("#students").addEventListener("click", function (){
+  contentPage.style.display = "none";
+  alunas.style.display = "flex";
+});
 
 // GRÁFICOS
 // GRÁFICO ALUNAS ATIVAS
