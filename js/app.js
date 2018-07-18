@@ -4,6 +4,9 @@ let dashboard = document.querySelector(".dashboard");
 let sedesSelection = document.querySelector(".sedes-selection");
 let content = document.querySelector("#content");
 let login = document.querySelector(".login");
+let logout = document.querySelector("#logout");
+// let construcaoPage = document.querySelector("#construcao");
+let contentPage = document.querySelector("#content");
 
 function displayChange(add, remove) {
   add.classList.remove("none");
@@ -19,6 +22,9 @@ btnLogin.addEventListener("click", function (event) {
   else if (username.value === "rafa" && password.value === "123456789") { displayChange(sedesSelection, login); }
   else if (username.value === "vanessa" && password.value === "laboratoria") { displayChange(sedesSelection, login); }
   else { username.style.border = "1px solid red"; password.style.border = "1px solid red"; }
+
+  password.value = "";
+  username.value = "";
 });
 
 // SELEÇÃO DE SEDE
@@ -63,6 +69,30 @@ let lima2 = document.querySelector("#lima2").addEventListener("click", function 
 let lima3 = document.querySelector("#lima3").addEventListener("click", function () {
   dashboardInfo("LIM", itenList[9].textContent);
 });
+
+// PAGE "EM CONSTRUÇÃO" EQUIPE
+// let teamBtn = document.querySelector("#team").addEventListener("click", function (){
+//   contentPage.style.display = "none";
+//   construcaoPage.style.display = "block";
+// });
+//
+// // PAGE "EM CONSTRUÇÃO" CONFIGURAÇÕES
+// let settingsBtn = document.querySelector("#settings").addEventListener("click", function (){
+//   contentPage.style.display = "none";
+//   construcaoPage.style.display = "block";
+//   displayChange(dashboard, settings);
+// });
+
+// PAGE DASHBOARD VOLTANDO PARA SEDES
+let sedesBtn = document.querySelector("#sedes").addEventListener("click", function (){
+  displayChange(sedesSelection, dashboard);
+});
+
+// PAGE LOGOUT VOLTANDO PARA LOGIN
+let logoutBtn = document.querySelector("#logout").addEventListener("click", function (){
+  displayChange(login, dashboard);
+});
+
 // GRÁFICOS
 // GRÁFICO ALUNAS ATIVAS
 function drawChart(activeStudents, dropoutStudents) {

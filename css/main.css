@@ -7,15 +7,10 @@
   text-decoration: none;
   list-style: none;
 }
-body{
-  background-image: url("../assets/images/Elegant_Background-15.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-}
 .login{
   display: flex;
   justify-content: center;
+  background-image: url(../assets/images/Elegant_Background-7.jpg);
 }
 .loginForm{
   display: flex;
@@ -23,9 +18,9 @@ body{
 }
 .loginContent{
   margin: 140px 0;
-  padding: 30px 50px;
-  box-shadow: 5px 5px 13px rgba(0, 0, 0, 0.3);
-  background-color: #f2f2f2;
+  padding: 20px 50px;
+  box-shadow: 5px 5px 13px rgba(0, 0, 0, 0.2);
+  background-color: #f8f8f8;
   text-align: center;
 }
 .login p{
@@ -35,8 +30,12 @@ body{
 }
 .username, .password{
   margin-bottom: 15px;
-  padding: 3px;
+  background-color: #f8f8f8;
+  display: block;
+  padding: 5px;
   border: 0;
+  border-bottom: 1px solid #ffc107;
+  margin-bottom: 30px;
   outline: 0;
 }
 .btn-login{
@@ -58,13 +57,15 @@ body{
   display: block;
 }
 .flex{
-  display: flex; 
+  display: flex;
   justify-content: space-around;
 }
 .sedes-selection{
   padding: 40px 140px;
+  text-transform: uppercase;
+  font-size: 14px;
   text-align: center;
-  background-color: #f2f2f2;
+  background-color: #f8f8f8;
 }
 .sedes-list{
   padding: 40px 0;
@@ -146,17 +147,27 @@ header .logo{
   color: #000;
   font-weight: 700;
 }
+#menu #logout{
+  background-color: #d5d5d5;
+}
+#menu #logout:hover{
+  background-color: #b6b6b6;
+}
 #menu a:hover{
   background-color: #ffc107;
   color: #000;
 }
-#content{
+.content{
   position: relative;
   top: 50px;
   width: 83%;
   float: right;
   display: flex;
   flex-wrap: wrap;
+  background-image: url("../assets/images/Elegant_Background-15.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 .box, .box1{
   margin: 10px;
@@ -164,10 +175,12 @@ header .logo{
   text-align: center;
   background-color: #f2f2f2;
   box-shadow: 5px 5px 13px rgba(0, 0, 0, 0.3);
-  /* display: inline-block; */
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+}
+.box:hover, .box1:hover{
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.4);
 }
 .box{
   width: 31.5%;
@@ -210,3 +223,7 @@ select{
 #goog-gt-tt {display:none !important;}
 .goog-te-banner-frame {display:none !important;}
 #google_translate_element2 {display:none !important;}
+
+#construcao{
+  display: none;
+}
