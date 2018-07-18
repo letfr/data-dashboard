@@ -16,26 +16,26 @@
     <form class="loginForm">
       <div class="loginContent">
         <img src="assets/images/Laboratoria_CMYK_logo_SIN FONDO.png" alt="" width="100" height="100">
-        <p>Usuário</p>
-        <input type="text" class="username">
-        <p>Senha</p>
-        <input type="password" class="password">
+        <!-- <p>Usuário</p> -->
+        <input type="text" class="username" placeholder="Usuário">
+        <!-- <p>Senha</p> -->
+        <input type="password" class="password" placeholder="Senha">
         <button class="btn-login block">Entrar</button>
       </div>
     </form>
   </section>
 
   <section class="sedes-selection none">
-    <img src="assets/images/logo.png" alt="logotype" class="logo" width="450" height="55">
+    <img src="assets/images/logo.png" alt="logotype" class="logo" width="400" height="50">
     <nav class="sedes-list">
       <ul class="brasil">
-        <img src="assets/images/brasil.png" alt="brasil" width="200" e height="117">
+        <img src="assets/images/brasil.png" alt="brasil" width="180" e height="110">
         <h1>São Paulo</h1>
         <li class="menu">
           <button id="sp-select" disabled>2018-1</button>
       </ul>
       <ul class="chile">
-        <img src="assets/images/chile.png" alt="chile" width="200" e height="117">
+        <img src="assets/images/chile.png" alt="chile" width="180" e height="110">
         <h1>Santiago</h1>
         <li class="menu">
           <button id="santiago1" class="itenList">2016-2</button>
@@ -43,15 +43,15 @@
           <button id="santiago3" class="itenList">2017-2</button>
       </ul>
       <ul class="mexico">
-        <img src="assets/images/mexico.png" alt="mexico" width="200" e height="117">
+        <img src="assets/images/mexico.png" alt="mexico" width="180" e height="110">
         <h1>Ciudad de México</h1>
         <li class="menu">
           <button id="cdmx1" class="itenList">2017-1</button>
           <button id="cdmx2" class="itenList">2017-2</button>
       </ul>
       <ul class="peru">
-        <img src="assets/images/peru.png" alt="peru" width="200" e height="117">
-        <h1>Arequipa</h1>
+        <img src="assets/images/peru.png" alt="peru" width="180" e height="110">
+        <h1>Arequipa</h1> 
         <li class="menu">
           <button id="aqp1" class="itenList">2016-2</button>
           <button id="aqp2" class="itenList">2017-1</button>
@@ -97,12 +97,16 @@
             <span class="flaticon-education"></span>EQUIPE</a>
         </li>
         <li>
-          <a href="#" id="nps">
-            <span class="flaticon-fluctuation"></span>NPS</a>
+          <a href="#" id="sedes">
+            <span class="flaticon-worldwide"></span>SEDES</a>
         </li>
         <li>
           <a href="#" id="settings">
             <span class="flaticon-settings"></span>CONFIGURAÇÕES</a>
+        </li>
+        <li>
+          <a href="#" id="logout">
+            <span class="flaticon-user"></span>LOGOUT</a>
         </li>
       </ul>
     </div>
@@ -153,9 +157,6 @@
       </div>
       <div class="tech-skills box1">
         <h1>Tech Skills</h1>
-        <select id="drop-menu">
-          <option value="sprint" selected>selecione o sprint</option>
-        </select>
         <div class="flex">
           <div class="info-box">
             <p class="info"></p>
@@ -170,9 +171,6 @@
       </div>
       <div class="hse box1">
         <h1>hse</h1>
-        <select id="drop-menu1">
-          <option value="sprint" selected>selecione o sprint</option>
-        </select>
         <div class="flex">
           <div class="info-box">
             <p class="info"></p>
