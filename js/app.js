@@ -4,12 +4,8 @@ let dashboard = document.querySelector(".dashboard");
 let sedesSelection = document.querySelector(".sedes-selection");
 let content = document.querySelector("#content");
 let login = document.querySelector(".login");
-let activeStudents = 0;
-let dropoutStudents = 0;
-let nottargetStudents = 0;
-let totalNps = 0;
-let sprints = 0;
-let sprint = 0;
+let contentPage = document.querySelector("#content");
+let alunas = document.querySelector("#alunas")
 
 function displayChange(add, remove) {
   add.classList.remove("none");
@@ -22,8 +18,8 @@ btnLogin.addEventListener("click", function (event) {
   let password = document.querySelector(".password");
 
   if (username.value === "ju" && password.value === "gatos") { displayChange(sedesSelection, login); }
-  else if (username.value === "rafa" && password.value === "123456789") { displayChange(sedesSelection, login); }
-  else if (username.value === "vanessa" && password.value === "laboratoria") { displayChange(sedesSelection, login); }
+  else if (username.value === "rafa" && password.value === "123") { displayChange(sedesSelection, login); }
+  else if (username.value === "vanessa" && password.value === "lab") { displayChange(sedesSelection, login); }
   else { username.style.border = "1px solid red"; password.style.border = "1px solid red"; }
 });
 
@@ -99,10 +95,10 @@ function drawChartTargetStudents(targetStudents, nottargetStudents, sprints, std
     ['Excedem a meta (alunas ativas)', Math.round(targetStudents)],
     ['Não excedem (alunas ativas)', Math.round(nottargetStudents / sprints)]
   ]);
-  var options =  {
-    title: 'Total de alunas: ' + (Math.round(std.length)).toString(),
-    backgroundColor : "#f2f2f2",
-    chartArea: {width: '100%', height: '90%'},
+  var options = {
+    title: 'Total de alunas: ' + (Math.round(std)).toString(),
+    backgroundColor: "#f2f2f2",
+    chartArea: { width: '100%', height: '90%' },
     pieHole: 0.5,
     slices: {
       0: { color: '#0A8EC0' },
@@ -223,8 +219,12 @@ function jediChart(ratingJedi, sprints) {
 }
 // ENVIANDO INFORMAÇÕES PARA DASHBOARD
 function dashboardInfo(sd, trm) {
-  let targetStudents = 0;
-  let targetNot = 0;
+  let studentStatus = {
+    active: 0,
+    dropout: 0,
+    targetNot: 0,
+    target: 0,
+  }
   let score = {
     tech: 0,
     techNot: 0,
@@ -235,19 +235,21 @@ function dashboardInfo(sd, trm) {
     promoters: 0,
     passive: 0,
     detractors: 0,
+    totalNps: 0,
     reaches: 0,
     doesntReach: 0,
     overcomes: 0,
     teacher: 0,
     jedi: 0
   }
+  let sprints = 0;
+  let sprint = 0;
   let std = data[sd][trm]["students"];
   let ratings = data[sd][trm]["ratings"];
   // DADOS DAS ESTUDANTES
   for (i in std) {
-    if (std[i]["active"] === true) { activeStudents += 1; }
-    else if (std[i]["active"] === false) { dropoutStudents += 1; }
-
+    if (std[i]["active"] === true) { studentStatus.active += 1; }
+    else if (std[i]["active"] === false) { studentStatus.dropout += 1; }
     for (j in std[i]["sprints"]) {
       if (std[i]["sprints"][j]["score"]["tech"] >= 1260) {
         score.tech += 1;
@@ -260,22 +262,22 @@ function dashboardInfo(sd, trm) {
         score.hseNot += 1;
       }
       if (std[i]["sprints"][j]["score"]["tech"] >= 1260 && std[i]["sprints"][j]["score"]["hse"] >= 840) {
-        targetStudents += 1;
+        studentStatus.target += 1;
       } else {
-        nottargetStudents += 1;
+        studentStatus.targetNot += 1;
       }
       sprint = std[i]["sprints"];
       sprints = std[i]["sprints"].length;
     }
   }
-  targetStudents = Math.round(targetStudents / sprints);
-  targetNot = Math.round(targetNot / sprints);
-  if (isNaN(targetStudents)) {
-    targetStudents = 0;
+  studentStatus.target = Math.round(studentStatus.target / sprints);
+  studentStatus.targetNot = Math.round(studentStatus.targetNot / sprints);
+  if (isNaN(studentStatus.target)) {
+    studentStatus.target = 0;
   }
   // DADOS DE AVALIAÇÕES
   for (i in ratings) {
-    totalNps = ratings[i]["nps"]["promoters"] - ratings[i]["nps"]["detractors"];
+    rating.totalNps = ratings[i]["nps"]["promoters"] - ratings[i]["nps"]["detractors"];
     rating.promoters = ratings[i]["nps"]["promoters"];
     rating.passive = ratings[i]["nps"]["passive"];
     rating.detractors = ratings[i]["nps"]["detractors"];
@@ -285,23 +287,60 @@ function dashboardInfo(sd, trm) {
     rating.teacher += data[sd][trm]["ratings"][i]["teacher"];
     rating.jedi += data[sd][trm]["ratings"][i]["jedi"];
   }
-  drawChart(activeStudents, dropoutStudents);
-  drawChartTargetStudents(targetStudents, nottargetStudents, sprints, std);
-  drawStacked(totalNps, rating.promoters, rating.passive, rating.detractors);
+  drawChart(studentStatus.active, studentStatus.dropout);
+  drawChartTargetStudents(studentStatus.target, studentStatus.targetNot, sprints, std.length);
+  drawStacked(rating.totalNps, rating.promoters, rating.passive, rating.detractors);
   drawChartTech(score.tech, score.techNot, sprints);
   drawChartHSE(score.hse, score.hseNot, sprints);
   drawSatisfaction(rating.reaches, rating.doesntReach, rating.overcomes, sprints);
   mentorsChart(rating.teacher, sprints);
   jediChart(rating.jedi, sprints);
-  studentsStatus(sd, trm, std, ratings, targetStudents);
-  npsPercentual(totalNps, rating.promoters, rating.passive, rating.detractors);
+  studentsStatus(sd, trm, std, ratings, studentStatus.target, studentStatus.active, studentStatus.dropout);
+  npsPercentual(rating.totalNps, rating.promoters, rating.passive, rating.detractors);
   studentsSatisfaction(rating.overcomes, rating.reaches, sprints);
   teacherRating(rating.teacher, rating.jedi, sprints);
-  techScore(score.tech, std.length, sprint);
-  hseScore(score.hse, std.length, sprint);
+  techScore(score.tech, std.length, sprint, sprints);
+  hseScore(score.hse, std.length, sprint, sprints);
+  alunasPage(std);
 }
 
-function studentsStatus(sd, trm, std, ratings, targetStudents) {
+function alunasPage(std) {
+  for (i in std) {
+    let box = document.createElement("div");
+    box.classList.add("box");
+    alunas.appendChild(box);
+    let name = document.createElement("h1");
+    name.textContent = std[i]["name"];
+    box.appendChild(name);
+    let img = document.createElement("img");
+    img.src = std[i]["photo"];
+    img.style.width = "120px";
+    img.style.height = "120px";
+    img.style.margin = "0 auto";
+    box.appendChild(img);
+    let active = document.createElement("p");
+    if (std[i]["active"] === "true") {
+      active.textContent = "ATIVA";
+    } else {
+      active.textContent = "INATIVA";
+    }
+    box.appendChild(active);
+    for (j in std[i]["sprints"]) {
+      let sprint = document.createElement("p");
+      sprint.textContent = "Sprint " + std[i]["sprints"][j]["number"];
+      sprint.classList.add("info-box");
+      sprint.style.margin = "10px auto";
+      let tech = document.createElement("p");
+      tech.textContent = "TECH: " + std[i]["sprints"][j]["score"]["tech"];
+      let hse = document.createElement("p");
+      hse.textContent = "HSE: " + std[i]["sprints"][j]["score"]["hse"];
+      box.appendChild(sprint);
+      box.appendChild(tech);
+      box.appendChild(hse);
+    }
+  }
+}
+function studentsStatus(sd, trm, std, ratings, targetStudents, activeStudents, dropoutStudents) {
   document.getElementsByClassName("info")[0].textContent = activeStudents;
   document.getElementsByClassName("info")[1].textContent = (dropoutStudents / data[sd][trm]["students"].length * 100).toFixed(1) + "%";
   document.getElementsByClassName("info")[2].textContent = targetStudents;
@@ -313,28 +352,13 @@ function npsPercentual(totalNps, promoters, passive, detractors) {
   document.getElementsByClassName("info-label")[1].textContent = passive + "% Passive";
   document.getElementsByClassName("info-label")[2].textContent = detractors + "% Detractors";
 }
-function techScore(scoreTech, totalStudents, sprint) {
-  let select = document.querySelector("#drop-menu");
-  for (i in sprint) {
-    let option = document.createElement("option");
-    option.textContent = "sprint " + (parseInt(i) + 1);
-    option.value = "sprint " + (parseInt(i) + 1);
-    select.appendChild(option);
-  }
+function techScore(scoreTech, totalStudents, sprint, sprints) {
   document.getElementsByClassName("info")[6].textContent = Math.round(scoreTech / sprints);
   document.getElementsByClassName("info")[7].textContent = ((scoreTech / sprints) / totalStudents * 100).toFixed(1) + "%";
 }
-function hseScore(scoreHSE, totalStudents, sprint) {
-  let select = document.querySelector("#drop-menu1");
-  for (i in sprint) {
-    let option = document.createElement("option");
-    option.textContent = "sprint " + (parseInt(i) + 1);
-    select.appendChild(option);
-  }
-  if (select.value === "sprint") {
-    document.getElementsByClassName("info")[8].textContent = Math.round(scoreHSE / sprints);
-    document.getElementsByClassName("info")[9].textContent = ((scoreHSE / sprints) / totalStudents * 100).toFixed(1) + "%";
-  }
+function hseScore(scoreHSE, totalStudents, sprint, sprints) {
+  document.getElementsByClassName("info")[8].textContent = Math.round(scoreHSE / sprints);
+  document.getElementsByClassName("info")[9].textContent = ((scoreHSE / sprints) / totalStudents * 100).toFixed(1) + "%";
 }
 function studentsSatisfaction(overcomes, reaches, sprints) {
   document.getElementsByClassName("info")[10].textContent = ((overcomes + reaches) / sprints).toFixed(1) + "%";

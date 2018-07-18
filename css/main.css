@@ -8,36 +8,43 @@
   list-style: none;
 }
 body{
-  background-image: url("../assets/images/Elegant_Background-15.jpg");
-  background-size: cover;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  background-color: #f8f8f8;
 }
 .login{
   display: flex;
   justify-content: center;
+  background-image: url(../assets/images/bg1.jpg);
+  position: fixed;
+  height: 100%;
+  width: 100%;
 }
 .loginForm{
   display: flex;
   justify-content: center;
+  max-height: 92%;
 }
 .loginContent{
   margin: 140px 0;
-  padding: 30px 50px;
-  box-shadow: 5px 5px 13px rgba(0, 0, 0, 0.3);
-  background-color: #f2f2f2;
-  text-align: center;
-}
-.login p{
-  font-size: 18px;
-  margin: 3px 0;
+  padding: 25px 50px;
+  box-shadow: 5px 5px 13px rgba(0, 0, 0, 0.2);
+  background-color: #ffc107;
   text-align: center;
 }
 .username, .password{
   margin-bottom: 15px;
-  padding: 3px;
+  display: block;
+  width: 100%;
+  padding: 5px;
   border: 0;
+  border-bottom: 1px solid #f8f8f8;
+  background-color: #ffc107;
+  margin-bottom: 25px;
   outline: 0;
+  font-size: 14px;
+}
+::placeholder{
+  color: #000;
+  opacity: 0.6;
 }
 .btn-login{
   margin: 0 auto;
@@ -45,26 +52,27 @@ body{
   border: 0;
   cursor: pointer;
   text-transform: uppercase;
-  font-weight: 700;
-  background-color: #ffc107;
+  font-weight: 600;
+  background-color: #f8f8f8;
 }
 .btn-login:hover{
-  background-color:  rgba(255, 229, 33, 0.7);
+  font-weight: 700;
 }
 .none{
   display: none;
 }
-.block{
+/* .block{
   display: block;
-}
+} */
 .flex{
   display: flex; 
   justify-content: space-around;
 }
 .sedes-selection{
   padding: 40px 140px;
+  text-transform: uppercase;
+  font-size: 14px;
   text-align: center;
-  background-color: #f2f2f2;
 }
 .sedes-list{
   padding: 40px 0;
@@ -98,6 +106,9 @@ body{
   background-color: #d5d5d5;
   border: 0;
   margin: 5px auto;
+}
+.sedes-list img{
+  border-radius: 100%;
 }
 .peru, .mexico, .chile, .brasil{
   display: flex;
@@ -146,11 +157,17 @@ header .logo{
   color: #000;
   font-weight: 700;
 }
+#menu #logout{
+  background-color: #d5d5d5;
+}
+#menu #logout:hover{
+  background-color: #b6b6b6;
+}
 #menu a:hover{
   background-color: #ffc107;
   color: #000;
 }
-#content{
+.content{
   position: relative;
   top: 50px;
   width: 83%;
@@ -158,22 +175,45 @@ header .logo{
   display: flex;
   flex-wrap: wrap;
 }
-.box, .box1{
+#content, #alunas{
+  background-image: url("../assets/images/bg2.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+/* #construcao{
+  display: none;
+  justify-content: center;
+}
+#construcao img{
+  margin: 100px 0;
+} */
+#alunas{
+  display: none;
+}
+.box, .box1, .box2{
   margin: 10px;
   padding: 20px;
   text-align: center;
   background-color: #f2f2f2;
   box-shadow: 5px 5px 13px rgba(0, 0, 0, 0.3);
-  /* display: inline-block; */
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+}
+.box:hover, .box1:hover{
+  box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.4); 
 }
 .box{
   width: 31.5%;
 }
 .box1{
   width: 48.1%;
+}
+#alunas .box h1{
+  font-size: 22px;
+}
+#alunas .box p{
+  font-weight: 600;
 }
 .box h1, .box1 h1{
   text-transform: uppercase;
@@ -199,12 +239,47 @@ header .logo{
 .info-label{
   display: block;
 }
-select{
-  border: 0;
-  padding: 5px 10px;
-  outline-color: #ffc107;
-  width: 200px;
-  margin: 0 auto;
+/* tooltip */
+.tooltip {
+  margin-left: 40px;
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  background-color: #f8f8f8;
+  padding: 8px 15px;
+  border-radius: 100%;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 230px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -115px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-weight: 500;
+  font-size: 14px;
+}
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 /* google translate */
 #goog-gt-tt {display:none !important;}

@@ -12,30 +12,33 @@
 </head>
 
 <body>
-  <section class="login">
+  <section class="login none">
     <form class="loginForm">
       <div class="loginContent">
-        <img src="assets/images/Laboratoria_CMYK_logo_SIN FONDO.png" alt="" width="100" height="100">
-        <p>Usuário</p>
-        <input type="text" class="username">
-        <p>Senha</p>
-        <input type="password" class="password">
+        <img src="assets/images/Laboratoria_CMYK_logo-02.png" alt="" width="310" height="90">
+        <!-- <p>Usuário</p> -->
+        <input type="text" class="username" placeholder="Usuário">
+        <!-- <p>Senha</p> -->
+        <input type="password" class="password" placeholder="Senha">
         <button class="btn-login block">Entrar</button>
+        <div class="tooltip">?
+          <span class="tooltiptext">user: vanessa | senha: lab<br>user: ju | senha: gatos <br>user: rafa | senha: 123</span>
+        </div>
       </div>
     </form>
   </section>
 
-  <section class="sedes-selection none">
-    <img src="assets/images/logo.png" alt="logotype" class="logo" width="450" height="55">
+  <section class="sedes-selection">
+    <img src="assets/images/logo.png" alt="logotype" class="logo" width="400" height="50">
     <nav class="sedes-list">
       <ul class="brasil">
-        <img src="assets/images/brasil.png" alt="brasil" width="200" e height="117">
+        <img src="assets/images/brasil.png" alt="brasil" width="150" e height="150">
         <h1>São Paulo</h1>
         <li class="menu">
           <button id="sp-select" disabled>2018-1</button>
       </ul>
       <ul class="chile">
-        <img src="assets/images/chile.png" alt="chile" width="200" e height="117">
+        <img src="assets/images/chile.png" alt="chile" width="150" e height="150">
         <h1>Santiago</h1>
         <li class="menu">
           <button id="santiago1" class="itenList">2016-2</button>
@@ -43,14 +46,14 @@
           <button id="santiago3" class="itenList">2017-2</button>
       </ul>
       <ul class="mexico">
-        <img src="assets/images/mexico.png" alt="mexico" width="200" e height="117">
+        <img src="assets/images/mexico.png" alt="mexico" width="150" e height="150">
         <h1>Ciudad de México</h1>
         <li class="menu">
           <button id="cdmx1" class="itenList">2017-1</button>
           <button id="cdmx2" class="itenList">2017-2</button>
       </ul>
       <ul class="peru">
-        <img src="assets/images/peru.png" alt="peru" width="200" e height="117">
+        <img src="assets/images/peru.png" alt="peru" width="150" e height="150">
         <h1>Arequipa</h1>
         <li class="menu">
           <button id="aqp1" class="itenList">2016-2</button>
@@ -66,7 +69,7 @@
   </section>
 
   <section class="dashboard none">
-    <header>
+    <header id="header">
       <img src="assets/images/logo.png" alt="logotype" class="logo">
       <!-- GTranslate: https://gtranslate.io/ -->
       <div class="translate">
@@ -97,16 +100,20 @@
             <span class="flaticon-education"></span>EQUIPE</a>
         </li>
         <li>
-          <a href="#" id="nps">
-            <span class="flaticon-fluctuation"></span>NPS</a>
+          <a href="#" id="sedes">
+            <span class="flaticon-worldwide"></span>SEDES</a>
         </li>
         <li>
           <a href="#" id="settings">
             <span class="flaticon-settings"></span>CONFIGURAÇÕES</a>
         </li>
+        <li>
+          <a href="#" id="logout">
+            <span class="flaticon-user"></span>LOGOUT</a>
+        </li>
       </ul>
     </div>
-    <div id="content">
+    <div id="content" class="content">
       <div class="students-total box">
         <h1>Total de alunas matriculadas</h1>
         <div class="flex">
@@ -153,9 +160,6 @@
       </div>
       <div class="tech-skills box1">
         <h1>Tech Skills</h1>
-        <select id="drop-menu">
-          <option value="sprint" selected>selecione o sprint</option>
-        </select>
         <div class="flex">
           <div class="info-box">
             <p class="info"></p>
@@ -170,9 +174,6 @@
       </div>
       <div class="hse box1">
         <h1>hse</h1>
-        <select id="drop-menu1">
-          <option value="sprint" selected>selecione o sprint</option>
-        </select>
         <div class="flex">
           <div class="info-box">
             <p class="info"></p>
@@ -215,6 +216,8 @@
         </div>
         <div id="jedi-chart"></div>
       </div>
+    </div>
+    <div id="alunas" class="content">
     </div>
   </section>
 
