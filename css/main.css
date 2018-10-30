@@ -30,7 +30,7 @@ body{
   background-color: #ffc107;
   text-align: center;
 }
-.username, .password{
+.email, .password{
   margin-bottom: 15px;
   display: block;
   width: 100%;
@@ -46,7 +46,7 @@ body{
   color: #000;
   opacity: 0.6;
 }
-.btn-login{
+.btn-login, .btn-signup{
   margin: 0 auto;
   padding: 10px 20px;
   border: 0;
@@ -55,7 +55,7 @@ body{
   font-weight: 600;
   background-color: #f8f8f8;
 }
-.btn-login:hover{
+.btn-login:hover, .btn-signup:hover{
   font-weight: 700;
 }
 .none{
@@ -91,14 +91,14 @@ body{
   padding: 10px 0;
   font-weight: 700;
 }
-.itenList{
+.itemList{
   margin: 3px auto;
   padding: 10px 20px;
   background-color: #ffc107;
   border: 0;
   cursor: pointer;
 }
-.itenList:hover{
+.itemList:hover{
   font-weight: 700;
 }
 #sp-select{

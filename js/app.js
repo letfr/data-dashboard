@@ -1,9 +1,7 @@
 // VARIÁVEIS GLOBAIS
-let btnLogin = document.querySelector(".btn-login");
 let dashboard = document.querySelector(".dashboard");
 let sedesSelection = document.querySelector(".sedes-selection");
 let content = document.querySelector("#content");
-let login = document.querySelector(".login");
 let logout = document.querySelector("#logout");
 let contentPage = document.querySelector("#content");
 let alunas = document.querySelector("#alunas")
@@ -13,61 +11,47 @@ function displayChange(add, remove) {
   remove.classList.add("none");
 }
 
-btnLogin.addEventListener("click", function (event) {
-  event.preventDefault();
-  let username = document.querySelector(".username");
-  let password = document.querySelector(".password");
-
-  if (username.value === "ju" && password.value === "gatos") { displayChange(sedesSelection, login); }
-  else if (username.value === "rafa" && password.value === "123") { displayChange(sedesSelection, login); }
-  else if (username.value === "vanessa" && password.value === "lab") { displayChange(sedesSelection, login); }
-  else { username.style.border = "1px solid red"; password.style.border = "1px solid red"; }
-
-  password.value = "";
-  username.value = "";
-});
-
 // SELEÇÃO DE SEDE
-let itenList = document.getElementsByClassName("itenList");
-for (x in itenList) {
-  itenList[x].onclick = function () {
+let itemList = document.getElementsByClassName("itemList");
+for (x in itemList) {
+  itemList[x].onclick = function () {
     dashboard.classList.remove("none");
     sedesSelection.classList.add("none");
   };
 }
 // SANTIAGO
 let santiago1 = document.querySelector("#santiago1").addEventListener("click", function () {
-  dashboardInfo("SCL", itenList[0].textContent);
+  dashboardInfo("SCL", itemList[0].textContent);
 });
 let santiago2 = document.querySelector("#santiago2").addEventListener("click", function () {
-  dashboardInfo("SCL", itenList[1].textContent);
+  dashboardInfo("SCL", itemList[1].textContent);
 });
 let santiago3 = document.querySelector("#santiago3").addEventListener("click", function () {
-  dashboardInfo("SCL", itenList[2].textContent);
+  dashboardInfo("SCL", itemList[2].textContent);
 });
 // CIDADE DO MEXICO
 let cdmx1 = document.querySelector("#cdmx1").addEventListener("click", function () {
-  dashboardInfo("CDMX", itenList[3].textContent);
+  dashboardInfo("CDMX", itemList[3].textContent);
 });
 let cdmx2 = document.querySelector("#cdmx2").addEventListener("click", function () {
-  dashboardInfo("CDMX", itenList[4].textContent);
+  dashboardInfo("CDMX", itemList[4].textContent);
 });
 // AREQUIPA
 let aqp1 = document.querySelector("#aqp1").addEventListener("click", function () {
-  dashboardInfo("AQP", itenList[5].textContent);
+  dashboardInfo("AQP", itemList[5].textContent);
 });
 let aqp2 = document.querySelector("#aqp2").addEventListener("click", function () {
-  dashboardInfo("AQP", itenList[6].textContent);
+  dashboardInfo("AQP", itemList[6].textContent);
 });
 // LIMA
 let lima1 = document.querySelector("#lima1").addEventListener("click", function () {
-  dashboardInfo("LIM", itenList[7].textContent);
+  dashboardInfo("LIM", itemList[7].textContent);
 });
 let lima2 = document.querySelector("#lima2").addEventListener("click", function () {
-  dashboardInfo("LIM", itenList[8].textContent);
+  dashboardInfo("LIM", itemList[8].textContent);
 });
 let lima3 = document.querySelector("#lima3").addEventListener("click", function () {
-  dashboardInfo("LIM", itenList[9].textContent);
+  dashboardInfo("LIM", itemList[9].textContent);
 });
 
 // PAGE DASHBOARD VOLTANDO PARA SEDES
