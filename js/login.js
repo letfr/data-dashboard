@@ -50,7 +50,7 @@ function createUserInDB(id, email) {
 }
 
 function signInRedirect(userId) {
-  window.location = "index.html";
+  window.location = "dashboard.html";
 }
 
 function handleError(error) {
